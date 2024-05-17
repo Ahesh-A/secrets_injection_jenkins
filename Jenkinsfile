@@ -11,7 +11,7 @@ pipeline {
         }
         stage('checkout git repository') {
             steps{
-                checkout scmGit(branches: [[name: '*/mian']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Ahesh-A/secrets_injection_jenkins.git']])
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Ahesh-A/secrets_injection_jenkins.git']])
             }
         }
         stage('run test') {
