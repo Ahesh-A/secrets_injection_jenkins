@@ -2,6 +2,7 @@ pipeline {
     agent any 
     environment {
         PORT = 3000
+        CI = 'true'
     }
     stages {
         stage('start building') {
