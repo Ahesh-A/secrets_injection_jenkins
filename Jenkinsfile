@@ -16,12 +16,12 @@ pipeline {
         }
         stage('run test') {
             steps{
-                sh './script/test.sh'
+                sh './scripts/test.sh'
             }
         }
         stage('build project') {
             steps{
-                sh './script/build.sh'
+                sh './scripts/build.sh'
             }
         }
         stage('check docker') {
@@ -37,18 +37,19 @@ pipeline {
                     } else {
                         echo "Docker is running"
                     }
-                }
             }
+            }
+           
            
         }
         stage('depoly docker container') {
             steps {
-                sh './script/deploy.sh'
+                sh './scripts/deploy.sh'
             }
         }
         stage('deployment verification') {
             steps {
-                sh './script/verification.sh'
+                sh './scripts/verification.sh'
             }
         }
 
@@ -56,7 +57,7 @@ pipeline {
 
     post {
         always {
-            sh './script/cleanup.sh'
+            sh './scripts/cleanup.sh'
         }
     }
 }
