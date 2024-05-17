@@ -30,7 +30,7 @@ pipeline {
                 script{
                     def isDockerRunning = sh(
                         script: 'docker info > /dev/null 2>&1 && echo "Docker is running" || echo "Docker is not running"',
-                        returnStdout: trueP
+                        returnStdout: true
                     ).trim()
 
                     if(isDockerRunning == "Docker is not running") {
