@@ -24,7 +24,7 @@ pipeline {
                 sh './script/build.sh'
             }
         }
-        satge('check docker') {
+        stage('check docker') {
             def isDockerRunning = sh(
                 script: 'docker info > /dev/null 2>&1 && echo "Docker is running" || echo "Docker is not running"',
                 returnStdout: true
