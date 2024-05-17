@@ -25,23 +25,26 @@ pipeline {
                 sh './scripts/build.sh'
             }
         }
-        stage('check docker') {
-            steps{
-                script{
-                    def isDockerRunning = sh(
-                        script: 'docker info > /dev/null 2>&1 && echo "Docker is running" || echo "Docker is not running"',
-                        returnStdout: true
-                    ).trim()
+        // stage('check docker') {
+        //     steps{
+        //         script{
+        //             def isDockerRunning = sh(
+        //                 script: 'docker info > /dev/null 2>&1 && echo "Docker is running" || echo "Docker is not running"',
+        //                 returnStdout: true
+        //             ).trim()
 
-                    if(isDockerRunning == "Docker is not running") {
-                        error("Docker is not running pleases start and try again")
-                    } else {
-                        echo "Docker is running"
-                    }
+        //             if(isDockerRunning == "Docker is not running") {
+        //                 error("Docker is not running pleases start and try again")
+        //             } else {
+        //                 echo "Docker is running"
+        //             }
+        //         }
+        //     }   
+        // }
+        stage('docker access') {
+            steps{
+                sh 'docker ps'
             }
-            }
-           
-           
         }
         stage('depoly docker container') {
             steps {
