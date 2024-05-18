@@ -65,7 +65,7 @@ pipeline {
             }
         }
 
-        steps('docker logout') {
+        stage('docker logout') {
             steps {
                 sh 'docker logout'
             }
