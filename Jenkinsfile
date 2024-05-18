@@ -74,7 +74,7 @@ pipeline {
         stage('deploy to kubernetes') {
             steps{
                 script{
-                    kubernetesDeploy(configs: 'deployment.yaml', kubeconfigId: '785c0bb2-699f-489f-b8f8-3ee15f468c98')
+                    kubernetesDeploy(configs: 'deployment.yaml', kubeconfigId: '785c0bb2-699f-489f-b8f8-3ee15f468c98',  enableConfigSubstitution: false)
                 }
             }
         }
