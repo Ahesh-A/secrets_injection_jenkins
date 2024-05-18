@@ -48,6 +48,7 @@ pipeline {
         }
         stage('deployment verification') {
             steps {
+                sleep(2)
                 sh './scripts/verification.sh'
             }
         }
@@ -72,7 +73,7 @@ pipeline {
         }
         stage('deploy to kubernetes') {
             steps{
-                sh 'kubectl apply -f deployment.yaml'
+                kubernetesDeploy (configs: 'deployment.yaml', kubeconfigId: '785c0bb2-699f-489f-b8f8-3ee15f468c98')
             }
         }
     }
