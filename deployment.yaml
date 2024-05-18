@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: secrets-module
-        image: aheshalagu/secrets_management
+        image: aheshalagu/hello_server
         resources:
           limits:
             memory: "128Mi"

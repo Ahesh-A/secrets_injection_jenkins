@@ -70,7 +70,11 @@ pipeline {
                 sh 'docker logout'
             }
         }
-
+        stage('deploy to kubernetes') {
+            steps{
+                sh 'kubectl apply -f deployment.yaml'
+            }
+        }
     }
 
     post {
