@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sercets-module
+  name: secrets-module
   labels:
-    app: secrets-modulei
+    app: secrets-module
 spec:
   replicas: 2
   selector:
