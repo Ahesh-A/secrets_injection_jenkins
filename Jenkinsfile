@@ -33,19 +33,14 @@ pipeline {
                         returnStdout: true
                     ).trim()
 
-                    if(isDockerRunning == "Docker is not running") {
-                        error("Docker is not running pleases start and try again")
+                    if (isDockerRunning == 'Docker is not running') {
+                        error('Docker is not running pleases start and try again')
                     } else {
-                        echo "Docker is running"
+                        echo 'Docker is running'
                     }
                 }
             }   
         }
-        // stage('docker access') {
-        //     steps{
-        //         sh 'docker ps'
-        //     }
-        // }
         stage('depoly docker container') {
             steps {
                 sh './scripts/deploy.sh'
@@ -54,6 +49,25 @@ pipeline {
         stage('deployment verification') {
             steps {
                 sh './scripts/verification.sh'
+            }
+        }
+        stage('docker login') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
+                    sh 'echo $pswrd | docker login -u $usrname --password-stdin'
+                }
+            }
+        }
+
+        stage('push image to docker hub') {
+            steps {
+                sh 'docker push aheshalagu/hello_server'
+            }
+        }
+
+        steps('docker logout') {
+            steps {
+                sh 'docker logout'
             }
         }
 
