@@ -71,10 +71,17 @@ pipeline {
                 sh 'docker logout'
             }
         }
-        stage('deploy to kubernetes') {
-            steps{
+        // stage('deploy to kubernetes') {
+        //     steps{
+        //         script{
+        //             kubernetesDeploy(configs: 'deployment.yaml', kubeconfigId: '785c0bb2-699f-489f-b8f8-3ee15f468c98',  enableConfigSubstitution: false)
+        //         }
+        //     }
+        // }
+        stage('k8s config') {
+            steps {
                 script{
-                    kubernetesDeploy(configs: 'deployment.yaml', kubeconfigId: '785c0bb2-699f-489f-b8f8-3ee15f468c98',  enableConfigSubstitution: false)
+                    sh 'kubectl get deployments -n default'
                 }
             }
         }
