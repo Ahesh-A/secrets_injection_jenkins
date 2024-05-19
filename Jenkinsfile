@@ -93,6 +93,7 @@ pipeline {
                             // sh 'mkdir -p ./kube'
                             // sh 'echo $kubeconfig > ./kube/config'
                             // sh 'kubectl get deployments -n default'
+                            sh 'echo $KUBECONFIG'
                              sh 'kubectl version --client'
                              sh 'kubectl config view'
                              sh 'kubectl get pods'
