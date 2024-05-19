@@ -59,11 +59,17 @@ pipeline {
             }
         }
 
-        stage('docker login') {
+        // stage('docker login') {
+        //     steps {
+        //         withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
+        //             sh 'echo $psword | docker login -u $usrname --password-stdin'
+        //         }
+        //     }
+        // }
+
+         stage('docker login') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
-                    sh 'echo $psword | docker login -u $usrname --password-stdin'
-                }
+                    sh './scripts/login.sh'
             }
         }
 
