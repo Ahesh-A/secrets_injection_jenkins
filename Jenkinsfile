@@ -11,21 +11,25 @@ pipeline {
                 echo 'Starting build'
             }
         }
+
         stage('checkout git repository') {
             steps{
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Ahesh-A/secrets_injection_jenkins.git']])
             }
         }
+
         stage('run test') {
             steps{
                 sh './scripts/test.sh'
             }
         }
+
         stage('build project') {
             steps{
                 sh './scripts/build.sh'
             }
         }
+
         stage('check docker') {
             steps{
                 script{
@@ -42,17 +46,20 @@ pipeline {
                 }
             }   
         }
+
         stage('depoly docker container') {
             steps {
                 sh './scripts/deploy.sh'
             }
         }
+
         stage('deployment verification') {
             steps {
                 sleep(2)
                 sh './scripts/verification.sh'
             }
         }
+
         stage('docker login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
@@ -72,34 +79,15 @@ pipeline {
                 sh 'docker logout'
             }
         }
-        // stage('deploy to kubernetes') {
-        //     steps{
-        //         script{
-        //             kubernetesDeploy(configs: 'deployment.yaml', kubeconfigId: '785c0bb2-699f-489f-b8f8-3ee15f468c98',  enableConfigSubstitution: false)
-        //         }
-        //     }
-        // }
-        // stage('Inject secrets') {
-        //     steps {
-        //         script {
-        //             sh 'cp /home/ahesh-19540/.kube/config ${KUBE_CONFIG_PATH}'
-        //         }
-        //     }
-        // }
-        stage('k8s config') {
+        
+        stage('deploy to k8s') {
             steps {
-                script{
-                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                            // sh 'mkdir -p ./kube'
-                            // sh 'echo $kubeconfig > ./kube/config'
-                            // sh 'kubectl get deployments -n default'
-                            sh 'echo $KUBECONFIG'
-                            //  sh 'kubectl version --client'
-                            //  sh 'kubectl config view'
-                             sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
-                        }
+                script {
+                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
                     }
                 }
+            }
         }
     }
 
