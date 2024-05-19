@@ -3,7 +3,7 @@ pipeline {
     environment {
         PORT = 3000
         CI = 'true'
-        kubeconfig = 'kubeconfig'
+        KUBECONFIG = 'home/ahesh-19540/kubeconfig'
     }
     stages {
         stage('start building') {
@@ -94,9 +94,9 @@ pipeline {
                             // sh 'echo $kubeconfig > ./kube/config'
                             // sh 'kubectl get deployments -n default'
                             sh 'echo $KUBECONFIG'
-                             sh 'kubectl version --client'
-                             sh 'kubectl config view'
-                             sh 'kubectl get pods'
+                            //  sh 'kubectl version --client'
+                            //  sh 'kubectl config view'
+                             sh 'kubectl get pods -n default --kubeconfig $KUBECONFIG'
                         }
                     }
                 }
