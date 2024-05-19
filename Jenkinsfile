@@ -79,13 +79,13 @@ pipeline {
         //         }
         //     }
         // }
-        stage('Inject secrets') {
-            steps {
-                script {
-                    sh 'cp /home/ahesh-19540/.kube/config ${KUBE_CONFIG_PATH}'
-                }
-            }
-        }
+        // stage('Inject secrets') {
+        //     steps {
+        //         script {
+        //             sh 'cp /home/ahesh-19540/.kube/config ${KUBE_CONFIG_PATH}'
+        //         }
+        //     }
+        // }
         stage('k8s config') {
             steps {
                 script{
