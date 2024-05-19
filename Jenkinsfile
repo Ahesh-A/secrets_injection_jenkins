@@ -3,6 +3,7 @@ pipeline {
     environment {
         PORT = 3000
         CI = 'true'
+        KUBE_CONFIG_PATH = '/home/ahesh-19540/.kube/config'
     }
     stages {
         stage('start building') {
@@ -78,13 +79,20 @@ pipeline {
         //         }
         //     }
         // }
+        stage('Inject secrets') {
+            steps {
+                script {
+                    sh 'cp ~/.kube/config ${KUBE_CONFIG_PATH}'
+                }
+            }
+        }
         stage('k8s config') {
             steps {
                 script{
                         withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
-                            sh 'mkdir -p ./kube'
-                            sh 'echo $kubeconfig > ./kube/config'
-                            sh 'kubectl get deployments -n default'
+                            // sh 'mkdir -p ./kube'
+                            // sh 'echo $kubeconfig > ./kube/config'
+                            sh 'kubectl get deployments -n default --kubeconfig=${KUBE_CONFIG_PATH}'
                         }
                     }
                 }
