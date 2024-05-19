@@ -1,0 +1,1 @@
+"/home/ahesh-19540/.npm-packages/bin/zohovault" run --exec="echo $DOCKERACCESSKEY | docker login -u $DOCKERUSERNAME --password-stdin"
