@@ -89,7 +89,7 @@ pipeline {
         stage('k8s config') {
             steps {
                 script{
-                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        withCredentials([file(credentialsId: 'config', variable: 'KUBECONFIG')]) {
                             // sh 'mkdir -p ./kube'
                             // sh 'echo $kubeconfig > ./kube/config'
                             // sh 'kubectl get deployments -n default'
