@@ -70,8 +70,14 @@ pipeline {
 
         stage('docker login') {
             steps {
+                script {
+                    def dockerAccessToken = sh(script: '$zohovault run --exec="echo $DOCKERACCESSTOKEN"')
+                    withEnv(["DockerAccessToken=${dockerAccessToken}"]) {
+                        sh 'echo $DockerAccessToken'
+                    }
 
-                    sh '$zohovault run --exec="echo $dat | docker login -u aheshalagu --password-stdin"'
+                        // sh '$zohovault run --exec="echo $DOCKERACCESSTOKEN | docker login -u aheshalagu --password-stdin"'
+                }
                 }
         }
 
