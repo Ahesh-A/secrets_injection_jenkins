@@ -95,6 +95,7 @@ pipeline {
                             // sh 'kubectl get deployments -n default'
                              sh 'kubectl version --client'
                              sh 'kubectl config view'
+                             sh 'kubectl get pods'
                         }
                     }
                 }
