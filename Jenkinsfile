@@ -62,7 +62,7 @@ pipeline {
         stage('docker login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
-                    sh 'echo $pswrd | docker login -u aheshalagu --password-stdin"'
+                    sh 'echo $pswrd | docker login -u aheshalagu --password-stdin'
                 }
             }
         }
