@@ -96,7 +96,7 @@ pipeline {
                             sh 'echo $KUBECONFIG'
                             //  sh 'kubectl version --client'
                             //  sh 'kubectl config view'
-                             sh 'kubectl get pods -n default --kubeconfig $KUBECONFIG'
+                             sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
                         }
                     }
                 }
