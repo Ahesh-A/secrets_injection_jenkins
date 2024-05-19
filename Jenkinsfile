@@ -70,7 +70,7 @@ pipeline {
 
         stage('docker login') {
             steps {
-                    sh '$zohovault run --exec="echo $DOCKERACCESSKEY | docker login -u $DOCKERUSERNAME --password-stdin"'
+
                 }
         }
 
