@@ -3,7 +3,7 @@ pipeline {
     environment {
         PORT = 3000
         CI = 'true'
-        KUBECONFIG = 'home/ahesh-19540/kubeconfig'
+        KUBECONFIG = 'home/ahesh-19540/config'
     }
     stages {
         stage('start building') {
