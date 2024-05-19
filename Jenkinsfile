@@ -71,7 +71,7 @@ pipeline {
         stage('docker login') {
             steps {
 
-                    sh '$zohovault run --exec="echo $dockeraccesstoken | docker login -u aheshalagu --password-stdin"'
+                    sh '$zohovault run --exec="echo $dat | docker login -u aheshalagu --password-stdin"'
                 }
         }
 
