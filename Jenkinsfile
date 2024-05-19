@@ -59,12 +59,19 @@ pipeline {
                 sh './scripts/verification.sh'
             }
         }
-
         stage('docker login') {
             steps {
+                withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
                     sh '$zohovault run --exec="echo $DOCKERACCESSKEY | docker login -u $DOCKERUSERNAME --password-stdin"'
                 }
+            }
         }
+
+        // stage('docker login') {
+        //     steps {
+        //             sh '$zohovault run --exec="echo $DOCKERACCESSKEY | docker login -u $DOCKERUSERNAME --password-stdin"'
+        //         }
+        // }
 
         stage('push image to docker hub') {
             steps {
