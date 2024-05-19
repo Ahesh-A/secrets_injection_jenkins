@@ -81,14 +81,12 @@ pipeline {
         stage('k8s config') {
             steps {
                 script{
-                    container(name: 'kubectl', shell: '/bin/sh') {
                         withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
                             sh 'echo $kubeconfig > ./kube/config'
                             sh 'kubectl get deployments -n default'
                         }
                     }
                 }
-            }
         }
     }
 
