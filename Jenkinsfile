@@ -92,7 +92,7 @@ pipeline {
                         withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
                             // sh 'mkdir -p ./kube'
                             // sh 'echo $kubeconfig > ./kube/config'
-                            sh 'kubectl get deployments -n default --kubeconfig=${KUBE_CONFIG_PAT}'
+                            sh 'kubectl get deployments -n default --kubeconfig=${KUBE_CONFIG_PATH}'
                         }
                     }
                 }
