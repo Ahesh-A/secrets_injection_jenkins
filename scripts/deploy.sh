@@ -1,1 +1,1 @@
-docker compose up -d
+zohovault docker compose up -d
