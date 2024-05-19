@@ -82,7 +82,7 @@ pipeline {
         stage('Inject secrets') {
             steps {
                 script {
-                    sh 'cp ~/.kube/config ${KUBE_CONFIG_PATH}'
+                    sh 'cp /home/ahesh-19540/.kube/config ${KUBE_CONFIG_PATH}'
                 }
             }
         }
@@ -92,7 +92,7 @@ pipeline {
                         withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
                             // sh 'mkdir -p ./kube'
                             // sh 'echo $kubeconfig > ./kube/config'
-                            sh 'kubectl get deployments -n default --kubeconfig=${KUBE_CONFIG_PATH}'
+                            sh 'kubectl get deployments -n default --kubeconfig=${KUBE_CONFIG_PAT}'
                         }
                     }
                 }
