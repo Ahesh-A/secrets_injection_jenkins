@@ -1,1 +1,1 @@
-"/home/ahesh-19540/.npm-packages/bin/zohovault" run --exec="docker compose down --rmi 'all'"
+$zohovault run --exec="docker compose down --rmi 'all'"
