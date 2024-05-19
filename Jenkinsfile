@@ -55,7 +55,7 @@ pipeline {
 
         stage('deployment verification') {
             steps {
-                sleep(2)
+                sleep(4)
                 sh './scripts/verification.sh'
             }
         }
@@ -79,7 +79,7 @@ pipeline {
                 sh 'docker logout'
             }
         }
-        
+
         stage('deploy to k8s') {
             steps {
                 script {
