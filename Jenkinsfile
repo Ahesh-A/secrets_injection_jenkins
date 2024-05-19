@@ -3,7 +3,7 @@ pipeline {
     environment {
         PORT = 3000
         CI = 'true'
-        KUBE_CONFIG_PATH = '/home/ahesh-19540/.kube/config'
+        kubeconfig = 'kubeconfig'
     }
     stages {
         stage('start building') {
@@ -92,7 +92,7 @@ pipeline {
                         withCredentials([file(credentialsId: 'kubeconfig', variable: 'kubeconfig')]) {
                             // sh 'mkdir -p ./kube'
                             // sh 'echo $kubeconfig > ./kube/config'
-                            sh 'kubectl get deployments -n default --kubeconfig=${KUBE_CONFIG_PATH}'
+                            sh 'kubectl get deployments -n default'
                         }
                     }
                 }
