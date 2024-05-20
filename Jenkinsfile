@@ -57,12 +57,6 @@ pipeline {
             }
         }
 
-        // stage('build docker image') {
-        //     steps {
-        //         sh '$zohovault run --exec="docker build -t aheshalagu/helloserver ."'
-        //         sleep(4)
-        //     }
-        // }
         stage('docker compose') {
             steps {
                 sh '$zohovault run --exec="docker compose up -d"'
@@ -81,16 +75,6 @@ pipeline {
             }
         }
 
-        // stage('deploy to k8s') {
-        //     steps {
-        //         script {
-        //             withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                        
-        //                 sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
-        //             }
-        //         }
-        //     }
-        // }
         stage('deploy to k8s') {
             steps {
                 script {
