@@ -63,7 +63,7 @@ pipeline {
         }
         stage('push image to docker hub') {
             steps {
-                sh 'docker push aheshalagu/hello_server'
+                sh 'docker push aheshalagu/hello_server:latest'
             }
         }
 
