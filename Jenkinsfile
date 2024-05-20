@@ -49,7 +49,7 @@ pipeline {
 
         stage('build docker image') {
             steps {
-                sh './scripts/buildimage.sh'
+                sh 'docker build -t aheshalagu/helloserver .'
                 sleep(4)
             }
         }
