@@ -49,7 +49,7 @@ pipeline {
 
         stage('depoly docker container') {
             steps {
-                sh './scripts/deploy.sh'
+                sh './scripts/buildimage.sh'
                 sleep(4)
             }
         }

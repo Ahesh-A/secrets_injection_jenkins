@@ -1,1 +1,0 @@
-$zohovault run --exec="docker compose up -d"
