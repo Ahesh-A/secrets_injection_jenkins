@@ -59,14 +59,14 @@ pipeline {
 
         stage('build docker image') {
             steps {
-                sh 'docker build -t aheshalagu/helloserver .'
+                sh '$zohovault run --exec="docker build -t aheshalagu/helloserver ."'
                 sleep(4)
             }
         }
 
         stage('push image to docker hub') {
             steps {
-                sh 'docker push aheshalagu/hello_server'
+                sh 'docker push aheshalagu/hello_server:latest'
             }
         }
 
