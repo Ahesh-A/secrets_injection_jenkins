@@ -81,11 +81,21 @@ pipeline {
             }
         }
 
+        // stage('deploy to k8s') {
+        //     steps {
+        //         script {
+        //             withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        
+        //                 sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
+        //             }
+        //         }
+        //     }
+        // }
         stage('deploy to k8s') {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                        sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
+                        sh '$zohovault run --exec="./sripts/k8sdepoly.sh"'
                     }
                 }
             }

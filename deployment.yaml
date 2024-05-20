@@ -22,7 +22,7 @@ spec:
             memory: "128Mi"
             cpu: "250m"
         ports:
-        - containerPort: 3000
+        - containerPort: $CONTAINER_PORT
 ---
 apiVersion: v1
 kind: Service
@@ -33,5 +33,5 @@ spec:
   selector:
     app: secrets-module
   ports:
-  - port: 3333
-    targetPort: 3000
+  - port: $K8SPORT
+    targetPort: $TARGET_PORT
