@@ -57,16 +57,21 @@ pipeline {
             }
         }
 
-        stage('build docker image') {
+        // stage('build docker image') {
+        //     steps {
+        //         sh '$zohovault run --exec="docker build -t aheshalagu/helloserver ."'
+        //         sleep(4)
+        //     }
+        // }
+        stage('docker compose') {
             steps {
-                sh '$zohovault run --exec="docker build -t aheshalagu/helloserver ."'
-                sleep(4)
+                sh '$zohovault run --exec="docker compose up -d"'
             }
         }
 
         stage('push image to docker hub') {
             steps {
-                sh 'docker push aheshalagu/hello_server:latest'
+                sh 'docker push aheshalagu/hello_server'
             }
         }
 
@@ -87,9 +92,9 @@ pipeline {
     //     }
     // }
 
-    // post {
-    //     always {
-    //         sh './scripts/cleanup.sh'
-    //     }
+    post {
+        always {
+            sh './scripts/cleanup.sh'
+        }
     }
 }
