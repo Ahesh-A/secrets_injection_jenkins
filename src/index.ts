@@ -16,5 +16,5 @@ app.post('/say-hello', (req, res) => {
 })
 
 export const server = app.listen(PORT, () => {
-    console.log(`app listening to port ${PORT}`)
+    console.log(`app listening to port ${PORT}`);
 })
