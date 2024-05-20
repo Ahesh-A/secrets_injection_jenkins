@@ -95,7 +95,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                        sh '$zohovault run --exec="./sripts/k8sdepoly.sh"'
+                        sh '$zohovault run --exec="./sripts/k8sdeploy.sh"'
                     }
                 }
             }
