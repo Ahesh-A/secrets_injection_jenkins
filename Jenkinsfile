@@ -59,54 +59,55 @@ pipeline {
         //         sh './scripts/verification.sh'
         //     }
         // }
-        // stage('docker login') {
-        //     steps {
-        //         withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
-        //             sh 'echo $psword | docker login -u $usrname --password-stdin'
-
-        //         }
-        //     }
-        // }
 
         stage('docker login') {
             steps {
-                script {
-                    def dockerAccessToken = sh(script: '$zohovault run --exec="echo $DOCKERACCESSTOKEN"', returnStdout: true).trim()
-                    withEnv(["DockerAccessToken=${dockerAccessToken}"]) {
-                        sh 'echo $DockerAccessToken'
-                    }
+                withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
+                    sh 'echo $psword | docker login -u $usrname --password-stdin'
 
-                        // sh '$zohovault run --exec="echo $DOCKERACCESSTOKEN | docker login -u aheshalagu --password-stdin"'
                 }
-                }
+            }
         }
 
-    //     stage('push image to docker hub') {
-    //         steps {
-    //             sh 'docker push aheshalagu/hello_server'
-    //         }
-    //     }
+        // stage('docker login') {
+        //     steps {
+        //         script {
+        //             def dockerAccessToken = sh(script: '$zohovault run --exec="echo $DOCKERACCESSTOKEN"', returnStdout: true).trim()
+        //             withEnv(["DockerAccessToken=${dockerAccessToken}"]) {
+        //                 sh 'echo $DockerAccessToken'
+        //             }
 
-    //     stage('docker logout') {
-    //         steps {
-    //             sh 'docker logout'
-    //         }
-    //     }
+        //                 // sh '$zohovault run --exec="echo $DOCKERACCESSTOKEN | docker login -u aheshalagu --password-stdin"'
+        //         }
+        //         }
+        // }
 
-    //     stage('deploy to k8s') {
-    //         steps {
-    //             script {
-    //                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-    //                     sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
+        stage('push image to docker hub') {
+            steps {
+                sh 'docker push aheshalagu/hello_server'
+            }
+        }
 
-    // post {
-    //     always {
-    //         sh './scripts/cleanup.sh'
-    //     }
+        stage('docker logout') {
+            steps {
+                sh 'docker logout'
+            }
+        }
+
+        stage('deploy to k8s') {
+            steps {
+                script {
+                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
+                    }
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh './scripts/cleanup.sh'
+        }
     }
 }
