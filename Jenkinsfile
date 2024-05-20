@@ -47,12 +47,7 @@ pipeline {
             }   
         }
 
-        stage('build docker image') {
-            steps {
-                sh 'docker build -t aheshalagu/helloserver .'
-                sleep(4)
-            }
-        }
+        
         stage('docker login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
@@ -61,9 +56,17 @@ pipeline {
                 }
             }
         }
+
+        stage('build docker image') {
+            steps {
+                sh 'docker build -t aheshalagu/helloserver .'
+                sleep(4)
+            }
+        }
+
         stage('push image to docker hub') {
             steps {
-                sh 'docker push aheshalagu/hello_server:latest'
+                sh 'docker push aheshalagu/hello_server'
             }
         }
 
