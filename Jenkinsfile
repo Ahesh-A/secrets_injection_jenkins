@@ -108,5 +108,5 @@ pipeline {
     //     always {
     //         sh './scripts/cleanup.sh'
     //     }
-    // }
+    }
 }
