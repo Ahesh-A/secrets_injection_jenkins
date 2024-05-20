@@ -47,19 +47,12 @@ pipeline {
             }   
         }
 
-        stage('depoly docker container') {
+        stage('build docker image') {
             steps {
                 sh './scripts/buildimage.sh'
                 sleep(4)
             }
         }
-
-        // stage('deployment verification') {
-        //     steps {
-        //         sh './scripts/verification.sh'
-        //     }
-        // }
-
         stage('docker login') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'a088496d-ae0a-4920-95ac-bd89d3ede7c2', passwordVariable: 'psword', usernameVariable: 'usrname')]) {
@@ -68,20 +61,6 @@ pipeline {
                 }
             }
         }
-
-        // stage('docker login') {
-        //     steps {
-        //         script {
-        //             def dockerAccessToken = sh(script: '$zohovault run --exec="echo $DOCKERACCESSTOKEN"', returnStdout: true).trim()
-        //             withEnv(["DockerAccessToken=${dockerAccessToken}"]) {
-        //                 sh 'echo $DockerAccessToken'
-        //             }
-
-        //                 // sh '$zohovault run --exec="echo $DOCKERACCESSTOKEN | docker login -u aheshalagu --password-stdin"'
-        //         }
-        //         }
-        // }
-
         stage('push image to docker hub') {
             steps {
                 sh 'docker push aheshalagu/hello_server'
@@ -94,20 +73,20 @@ pipeline {
             }
         }
 
-        stage('deploy to k8s') {
-            steps {
-                script {
-                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                        sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
-                    }
-                }
-            }
-        }
-    }
+    //     stage('deploy to k8s') {
+    //         steps {
+    //             script {
+    //                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+    //                     sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     // post {
     //     always {
     //         sh './scripts/cleanup.sh'
     //     }
-    // }
+    }
 }
