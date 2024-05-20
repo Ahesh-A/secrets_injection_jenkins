@@ -71,7 +71,7 @@ pipeline {
         stage('docker login') {
             steps {
                 script {
-                    def dockerAccessToken = sh(script: '$zohovault run --exec="echo $DOCKERACCESSTOKEN"')
+                    def dockerAccessToken = sh(script: '$zohovault run --exec="echo $DOCKERACCESSTOKEN"', returnStdout: true).trim()
                     withEnv(["DockerAccessToken=${dockerAccessToken}"]) {
                         sh 'echo $DockerAccessToken'
                     }
@@ -81,32 +81,32 @@ pipeline {
                 }
         }
 
-        stage('push image to docker hub') {
-            steps {
-                sh 'docker push aheshalagu/hello_server'
-            }
-        }
+    //     stage('push image to docker hub') {
+    //         steps {
+    //             sh 'docker push aheshalagu/hello_server'
+    //         }
+    //     }
 
-        stage('docker logout') {
-            steps {
-                sh 'docker logout'
-            }
-        }
+    //     stage('docker logout') {
+    //         steps {
+    //             sh 'docker logout'
+    //         }
+    //     }
 
-        stage('deploy to k8s') {
-            steps {
-                script {
-                    withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
-                        sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
-                    }
-                }
-            }
-        }
-    }
+    //     stage('deploy to k8s') {
+    //         steps {
+    //             script {
+    //                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+    //                     sh 'kubectl apply -f deployment.yaml --kubeconfig $KUBECONFIG'
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
-    post {
-        always {
-            sh './scripts/cleanup.sh'
-        }
-    }
+    // post {
+    //     always {
+    //         sh './scripts/cleanup.sh'
+    //     }
+    // }
 }
