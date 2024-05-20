@@ -50,12 +50,12 @@ pipeline {
         stage('depoly docker container') {
             steps {
                 sh './scripts/deploy.sh'
+                sleep(4)
             }
         }
 
         stage('deployment verification') {
             steps {
-                sleep(4)
                 sh './scripts/verification.sh'
             }
         }
