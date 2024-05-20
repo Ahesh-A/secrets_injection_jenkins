@@ -105,9 +105,9 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            sh './scripts/cleanup.sh'
-        }
-    }
+    // post {
+    //     always {
+    //         sh './scripts/cleanup.sh'
+    //     }
+    // }
 }
