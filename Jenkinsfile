@@ -68,10 +68,10 @@ pipeline {
                 sh '$zohovault run --exec="docker compose up -d"'
             }
         }
-
+        
         stage('push image to docker hub') {
             steps {
-                sh 'docker push aheshalagu/hello_server'
+                sh 'docker push aheshalagu/hello_server:latest'
             }
         }
 
@@ -90,7 +90,7 @@ pipeline {
     //             }
     //         }
     //     }
-    // }
+    }
 
     post {
         always {
