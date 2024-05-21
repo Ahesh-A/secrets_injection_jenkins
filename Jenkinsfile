@@ -1,13 +1,7 @@
-def config = [
-    connect
-]
-
 pipeline {
     agent any 
     environment {
         CI = 'true'
-        KUBECONFIG = 'home/ahesh-19540/tempconfig/kubeconfig'
-        zohovault = '/home/ahesh-19540/.npm-packages/bin/zohovault'
     }
     stages {
         stage('start building') {
@@ -56,12 +50,6 @@ pipeline {
                     sh 'echo $PORT'
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            sh './scripts/cleanup.sh'
         }
     }
 }
