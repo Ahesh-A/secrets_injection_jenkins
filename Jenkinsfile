@@ -47,7 +47,7 @@ pipeline {
         stage('docker compose') {
             steps {
                 withSecrets(config: [connectCredentialId: '1pass_jenkins_token', connectHost: 'http://localhost:8080', opCLIPath: '/home/ahesh-19540/software'], secrets: [[envVar: 'PORT', secretRef: 'op://jenkins_provider/server_credential/port']]) {
-                    sh 'echo $PORT'
+                    sh 'docker compose up'
                 }
             }
         }
