@@ -1,13 +1,14 @@
-pipeline {
-    agent any 
-    environment {
-        CI = 'true'
-        OP_CONNECT_HOST = 'http://localhost:8080'
-        OP_CONNECT_TOKEN = credentials('1pass_jenkins_token')
-        OP_CLI_PATH = '/home/ahesh-19540/software'
-        PORT = 'op://jenkins_provider/server_credential/port'
-    }
+def config = [
+    connectHost: 'http://localhost:8080',
+    connectCredentialId: '1pass_jenkins_token',
+    opCLIPath: '/home/ahesh-19540/software'
+]
+def secrets = [
+    [envVar: 'PORT', secretRef:'op://jenkins_provider/server_credential/port' ]
+]
 
+pipeline {
+    agent any
     stages {
         stage('start building') {
             steps {
@@ -49,10 +50,12 @@ pipeline {
         //         }
         //     }   
         // }
-        
+
         stage('print port') {
-            steps {
-                sh 'echo $PORT'
+            withSecrets(config: config, secrets: secrets) {
+                steps {
+                    sh 'echo $PORT'
+                }
             }
         }
         // stage('docker compose') {
