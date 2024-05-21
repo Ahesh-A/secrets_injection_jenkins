@@ -52,8 +52,8 @@ pipeline {
         // }
 
         stage('print port') {
-            withSecrets(config: config, secrets: secrets) {
-                steps {
+            steps {
+                withSecrets(config: config, secrets: secrets) {
                     sh 'echo $PORT'
                 }
             }
