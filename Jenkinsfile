@@ -1,7 +1,7 @@
 def config = [
-    connectHost: 'http://localhost:8080',
-    connectCredentialId: 'zv_jenkins_token',
-    opCLIPath: '/home/ahesh-19540/software'
+    zvServerURI: 'http://localhost:8080',
+    zvCredentialId: 'zv_jenkins_token',
+    zvCLIPath: '/home/ahesh-19540/software'
 ]
 def secret = [
     [envVar: 'PORT', zvRef:'' ]
