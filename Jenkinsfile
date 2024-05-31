@@ -1,10 +1,10 @@
 def config = [
     connectHost: 'http://localhost:8080',
-    connectCredentialId: '1pass_jenkins_token',
+    connectCredentialId: 'zv_jenkins_token',
     opCLIPath: '/home/ahesh-19540/software'
 ]
-def secrets = [
-    [envVar: 'PORT', secretRef:'op://jenkins_provider/server_credential/port' ]
+def secret = [
+    [envVar: 'PORT', zvRef:'' ]
 ]
 
 pipeline {
@@ -18,7 +18,7 @@ pipeline {
 
         stage('checkout git repository') {
             steps{
-                checkout scmGit(branches: [[name: '*/1pass']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Ahesh-A/secrets_injection_jenkins.git']])
+                checkout scmGit(branches: [[name: '*/zv']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Ahesh-A/secrets_injection_jenkins.git']])
             }
         }
 
@@ -33,37 +33,20 @@ pipeline {
                 sh './scripts/build.sh'
             }
         }
-
-        stage('check docker') {
-            steps{
-                script{
-                    def isDockerRunning = sh(
-                        script: 'docker info > /dev/null 2>&1 && echo "Docker is running" || echo "Docker is not running"',
-                        returnStdout: true
-                    ).trim()
-
-                    if (isDockerRunning == 'Docker is not running') {
-                        error('Docker is not running pleases start and try again')
-                    } else {
-                        echo 'Docker is running'
-                    }
-                }
-            }   
-        }
-
-        stage('docker compose') {
+        stage('test zvSecret') {
             steps {
-                withSecrets(config: config, secrets: secrets) {
-                    sh 'docker compose up -d'
+                ZvSecrets(config: config, secret: secret) {
+                    sh 'echo $PORT'
                 }
             }
         }
-    }
-    post {
-        always {
-            withSecrets(config: config, secrets: secrets) {
-                sh './scripts/cleanup.sh'
-            }
+   }
+
+   post {
+    always{
+        ZvSecrets(config: config, secret: secret) {
+            sh './scripts/zv.sh'
         }
     }
+   }
 }
