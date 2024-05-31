@@ -42,11 +42,11 @@ pipeline {
         }
    }
 
-   post {
-    always{
-        ZvSecrets(config: config, secret: secret) {
-            sh './scripts/zv.sh'
-        }
-    }
-   }
+//    post {
+//     always{
+//         ZvSecrets(config: config, secret: secret) {
+//             sh './scripts/zv.sh'
+//         }
+//     }
+//    }
 }
