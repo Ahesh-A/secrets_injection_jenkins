@@ -52,7 +52,7 @@ pipeline {
    post {
     always{
         ZvSecrets(config: config, secret: secret) {
-            sh './scripts/zv.sh'
+            sh './scripts/cleanup.sh'
         }
     }
    }
