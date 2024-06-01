@@ -36,7 +36,7 @@ pipeline {
         stage('docker compose') {
             steps {
                 ZvSecrets(config: config, secret: secret) {
-                    sh '$zohovault run --exec="docker compose up -d"'
+                    sh 'docker compose up -d'
                 }
             }
         }
