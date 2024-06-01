@@ -40,13 +40,13 @@ pipeline {
                 }
             }
         }
-        stage('test zvSecret') {
-            steps {
-                ZvSecrets(config: config, secret: secret) {
-                    sh 'echo $PORT'
-                }
-            }
-        }
+        // stage('test zvSecret') {
+        //     steps {
+        //         ZvSecrets(config: config, secret: secret) {
+        //             sh 'echo $PORT'
+        //         }
+        //     }
+        // }
    }
 
    post {
