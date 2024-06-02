@@ -4,7 +4,11 @@ def config = [
     zvCLIPath: '/home/ahesh-19540/software'
 ]
 def secret = [
-    [envVar: 'PORT', zvRef:'' ]
+    [envVar: 'PORT', zvRef:'ZV_PORT'],
+    [envVar: 'DOCKER_USERNAME', zvRef:'ZV_DOCKER_USERNAME'],
+    [envVar: 'DOCKER_ACCESS_TOKEN', zvRef:'ZV_DOCKER_ACCESS_TOKEN'],
+    [envVar: 'CONTAINER_PORT', zvRef:'ZV_CONTAINER_PORT'],
+    [envVar: 'TARGET_PORT', zvRef:'ZV_TARGET_PORT'],
 ]
 
 pipeline {
@@ -33,13 +37,24 @@ pipeline {
                 sh './scripts/build.sh'
             }
         }
-        stage('docker compose') {
-            steps {
-                ZvSecrets(config: config, secret: secret) {
-                    sh 'docker compose up -d'
+
+        stage('check docker') {
+            steps{
+                script{
+                    def isDockerRunning = sh(
+                        script: 'docker info > /dev/null 2>&1 && echo "Docker is running" || echo "Docker is not running"',
+                        returnStdout: true
+                    ).trim()
+
+                    if (isDockerRunning == 'Docker is not running') {
+                        error('Docker is not running pleases start and try again')
+                    } else {
+                        echo 'Docker is running'
+                    }
                 }
-            }
+            }   
         }
+
         stage('docker login') {
             steps {
                 ZvSecrets(config: config, secret: secret) {
@@ -48,6 +63,15 @@ pipeline {
                 }
             }
         }
+
+        stage('docker compose') {
+            steps {
+                ZvSecrets(config: config, secret: secret) {
+                    sh 'docker compose up -d'
+                }
+            }
+        }
+        
         stage('push image to docker hub') {
             steps {
                 sh 'docker push aheshalagu/hello_server:latest'
