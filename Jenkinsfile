@@ -39,7 +39,27 @@ pipeline {
                     sh 'docker compose up -d'
                 }
             }
+        },
+        stage('docker login') {
+            steps {
+                ZvSecrets(config: config, secret: secret) {
+                    sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin'
+
+                }
+            }
+        },
+         stage('push image to docker hub') {
+            steps {
+                sh 'docker push aheshalagu/hello_server:latest'
+            }
         }
+
+        stage('docker logout') {
+            steps {
+                sh 'docker logout'
+            }
+        }
+
         // stage('test zvSecret') {
         //     steps {
         //         ZvSecrets(config: config, secret: secret) {
