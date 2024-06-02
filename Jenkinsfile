@@ -39,7 +39,7 @@ pipeline {
                     sh 'docker compose up -d'
                 }
             }
-        },
+        }
         stage('docker login') {
             steps {
                 ZvSecrets(config: config, secret: secret) {
@@ -47,7 +47,7 @@ pipeline {
 
                 }
             }
-        },
+        }
          stage('push image to docker hub') {
             steps {
                 sh 'docker push aheshalagu/hello_server:latest'
