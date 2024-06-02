@@ -60,13 +60,13 @@ pipeline {
             }
         }
 
-        // stage('test zvSecret') {
-        //     steps {
-        //         ZvSecrets(config: config, secret: secret) {
-        //             sh 'echo $PORT'
-        //         }
-        //     }
-        // }
+        stage('deploy to k8s') {
+            steps {
+                ZvSecrets(config: config, secret: secret) {
+                    sh './script/k8sdeploy.sh'
+                }
+            }
+        }
    }
 
    post {
