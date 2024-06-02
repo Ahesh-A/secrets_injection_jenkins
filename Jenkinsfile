@@ -63,7 +63,7 @@ pipeline {
         stage('deploy to k8s') {
             steps {
                 ZvSecrets(config: config, secret: secret) {
-                    sh './script/k8sdeploy.sh'
+                    sh './scripts/k8sdeploy.sh'
                 }
             }
         }
