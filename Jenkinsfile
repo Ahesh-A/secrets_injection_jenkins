@@ -37,7 +37,13 @@ pipeline {
                 sh './scripts/build.sh'
             }
         }
-
+        stage ('check masking') {
+            steps {
+                ZvSecrets(config: config, secret: secret) {
+                    sh 'echo $DOCKER_USERNAME'
+                }
+            }
+        }
         stage('check docker') {
             steps{
                 script{
