@@ -61,49 +61,49 @@ pipeline {
             }   
         }
 
-        stage('docker login') {
-            steps {
-                ZvSecrets(config: config, secret: secret) {
-                    sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin'
+        // stage('docker login') {
+        //     steps {
+        //         ZvSecrets(config: config, secret: secret) {
+        //             sh 'echo $DOCKER_ACCESS_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin'
 
-                }
-            }
-        }
+        //         }
+        //     }
+        // }
 
-        stage('docker compose') {
-            steps {
-                ZvSecrets(config: config, secret: secret) {
-                    sh 'docker compose up -d'
-                }
-            }
-        }
+        // stage('docker compose') {
+        //     steps {
+        //         ZvSecrets(config: config, secret: secret) {
+        //             sh 'docker compose up -d'
+        //         }
+        //     }
+        // }
         
-        stage('push image to docker hub') {
-            steps {
-                sh 'docker push aheshalagu/hello_server:latest'
-            }
-        }
+        // stage('push image to docker hub') {
+        //     steps {
+        //         sh 'docker push aheshalagu/hello_server:latest'
+        //     }
+        // }
 
-        stage('docker logout') {
-            steps {
-                sh 'docker logout'
-            }
-        }
+        // stage('docker logout') {
+        //     steps {
+        //         sh 'docker logout'
+        //     }
+        // }
 
-        stage('deploy to k8s') {
-            steps {
-                ZvSecrets(config: config, secret: secret) {
-                    sh './scripts/k8sdeploy.sh'
-                }
-            }
-        }
+        // stage('deploy to k8s') {
+        //     steps {
+        //         ZvSecrets(config: config, secret: secret) {
+        //             sh './scripts/k8sdeploy.sh'
+        //         }
+        //     }
+        // }
    }
 
-   post {
-    always{
-        ZvSecrets(config: config, secret: secret) {
-            sh './scripts/cleanup.sh'
-        }
-    }
-   }
+//    post {
+//     always{
+//         ZvSecrets(config: config, secret: secret) {
+//             sh './scripts/cleanup.sh'
+//         }
+//     }
+//    }
 }
